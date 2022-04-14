@@ -1,30 +1,43 @@
+import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import warehouse from './assets/warehouse.jpg';
-import Stock from './components/Stock.tsx';
+import { useState } from 'react';
+import Home from "./components/Home";
+import Pick from "./components/Pick";
+import { Base } from './styles';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
+const Tab = createBottomTabNavigator();
+const routeIcons = {
+  "Lager": "home",
+  "Plock": "list",
+}
 
 export default function App() {
+  const [products, setProducts] = useState([]);
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.base}>
-        <Text style={{color: '#33c', fontSize: 42}}>Lager-Appen</Text>
-        <Image source={warehouse} style={{ width: 320, height: 240 }} />
-        <Stock />
-        <StatusBar style="auto" />
-      </View>
+    <SafeAreaView style={Base.container}>
+      <NavigationContainer>
+          <Tab.Navigator screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName = routeIcons[route.name] || "alert";
+
+              return <Ionicons name={iconName} size={size} color={color} />;
+          },
+            tabBarActiveTintColor: 'tomato',
+            tabBarInactiveTintColor: 'gray',
+          })}
+        >
+          <Tab.Screen name="Lager">
+            {() => <Home products={products} setProducts={setProducts} />}
+          </Tab.Screen>
+          <Tab.Screen name="Plock" component={Pick} />
+        </Tab.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  base: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingLeft: 12,
-    paddingRight: 12,
-  }
-});

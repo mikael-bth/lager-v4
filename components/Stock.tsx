@@ -1,30 +1,46 @@
-import { useState, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import { useEffect } from 'react';
 import { Text, View } from 'react-native';
-import config from "../config/config.json";
+import productModel from "../models/products.ts";
+import { Typography } from './../styles';
 
-function StockList() {
-    const [products, setProducts] = useState([]);
-  
-    useEffect(() => {
-      fetch(`${config.base_url}/products?api_key=${config.api_key}`)
-        .then(response => response.json())
-        .then(result => setProducts(result.data));
-    }, []);
-  
-    const list = products.map((product, index) => <Text key={index}>{ product.name } - { product.stock }</Text>);
-  
-    return (
-      <View>
-        {list}
-      </View>
-    );
+function StockList({products, setProducts}) {
+  const isFocused = useIsFocused();
+
+  if (isFocused) {
+    reloadProducts();
   }
 
-export default function Stock() {
+  useEffect(async () => {
+    reloadProducts();
+  }, []);
+
+  async function reloadProducts() {
+    const products = await productModel.getProducts();
+    setProducts(products);
+  }
+  
+  const list = products.map((product, index) => {
+    return <Text
+            key={index}
+            style={{ ...Typography.normal }}
+            >
+              { product.name } - { product.stock }
+            </Text>
+  });
+
   return (
     <View>
-      <Text style={{color: '#333', fontSize: 24}}>Lagerförteckning</Text>
-      <StockList/>
+      {list}
+    </View>
+  );
+}
+
+export default function Stock({products, setProducts}) {
+  return (
+    <View>
+      <Text style={[Typography.header2, {color: '#333'}]}>Lagerförteckning</Text>
+      <StockList products={products} setProducts={setProducts} />
     </View>
   );
 }
