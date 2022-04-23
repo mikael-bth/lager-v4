@@ -28,7 +28,7 @@ export default function DeliveryForm({ navigation }) {
     
         await productModel.updateProduct(updatedProduct);
     
-        navigation.navigate("List", { reload: true });
+        navigation.navigate("Inleveranser", { reload: true });
     }
 
     return (
