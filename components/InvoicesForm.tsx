@@ -74,7 +74,9 @@ function OrderDropDown(props) {
 
     const itemsList = orders.map((ord, index) => {
         ordersHash[ord.id] = ord;
-        return <Picker.Item key={index} label={ord.name + ' | ' + ord.id.toString()} value={ord.id} />;
+        if (ord.status_id < 600) {
+            return <Picker.Item key={index} label={ord.name + ' | ' + ord.id.toString()} value={ord.id} />;
+        }
     });
 
     return (

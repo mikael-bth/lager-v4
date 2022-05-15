@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const storage = {
     storeToken: async function storeToken(token: string) {
-        console.log(token);
         try {
             const tokenAndDate = {
                 token: token,
@@ -12,7 +11,7 @@ const storage = {
 
             await AsyncStorage.setItem('@token', jsonValue);
         } catch (e) {
-            // saving error
+            console.log(e)
         }
     },
     readToken: async function readToken(): Promise<any> {
@@ -20,7 +19,7 @@ const storage = {
             const jsonValue = await AsyncStorage.getItem('@token');
             return jsonValue != null ? JSON.parse(jsonValue) : null;
         } catch (e) {
-            // error reading value
+            console.log(e)
         }
     },
     deleteToken: async function deleteToken() {

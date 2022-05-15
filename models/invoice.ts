@@ -1,15 +1,14 @@
 import config from "../config/config.json";
 import Invoice from "./../interfaces/invoice";
-import Storage from "./storage";
+import storage from "./storage";
 
 const invoices = {
     getInvoices: async function getInvoices(): Promise<Invoice> {
-        const token = Storage.readToken();
-        console.log(token)
+        const token = await storage.readToken();
 
         const response = await fetch(`${config.base_url}/invoices?api_key=${config.api_key}`, {
             headers: {
-                'x-access-token': [token]
+                'x-access-token': [token.token]
             },
             method: 'GET'
         })
@@ -19,7 +18,7 @@ const invoices = {
     },
 
     addInvoice: async function addInvoice(invoice: Partial<Invoice>) {
-        const token = Storage.readToken();
+        const token = await storage.readToken();
         console.log(invoice);
 
         const newInvoice = {
@@ -35,7 +34,7 @@ const invoices = {
                 body: JSON.stringify(newInvoice),
                 headers: {
                     'content-type':'application/json',
-                    'x-access-token': [token]
+                    'x-access-token': [token.token]
                 },
                 method: 'POST'
             });
