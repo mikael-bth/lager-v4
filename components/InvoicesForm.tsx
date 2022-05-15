@@ -7,6 +7,7 @@ import orderModel from "../models/orders";
 import invoiceModel from "../models/invoice";
 import Order from '../interfaces/order';
 import Invoice from '../interfaces/invoice';
+import config from './../config/config.json';
 
 export default function InvoicesForm({ navigation }) {
     const [invoice, setInvoice] = useState<Partial<Invoice>>({});
@@ -28,6 +29,7 @@ export default function InvoicesForm({ navigation }) {
         const updatedOrder = {
             ...currentOrder,
             status_id: 600,
+            api_key: config.api_key
         };
     
         await orderModel.updateOrder(updatedOrder);
@@ -77,6 +79,7 @@ function OrderDropDown(props) {
         if (ord.status_id < 600) {
             return <Picker.Item key={index} label={ord.name + ' | ' + ord.id.toString()} value={ord.id} />;
         }
+        return
     });
 
     return (

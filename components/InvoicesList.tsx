@@ -26,11 +26,10 @@ export default function InvoicesList({ route, navigation }) {
         .map((invoice, index) => {
             return (
             <DataTable.Row key={index}>
-                <DataTable.Cell>{invoice.order_id}</DataTable.Cell>
                 <DataTable.Cell>{invoice.name}</DataTable.Cell>
-                <DataTable.Cell>{invoice.total_price}</DataTable.Cell>
-                <DataTable.Cell>{invoice.creation_date}</DataTable.Cell>
                 <DataTable.Cell>{invoice.due_date}</DataTable.Cell>
+                <DataTable.Cell numeric>{invoice.order_id}</DataTable.Cell>
+                <DataTable.Cell numeric>{invoice.total_price}</DataTable.Cell>
             </DataTable.Row>
             );
         });
@@ -54,11 +53,10 @@ export default function InvoicesList({ route, navigation }) {
         <View style={[Invoices.container, {alignItems: "center"}]}>
             <DataTable>
                 <DataTable.Header>
-                    <DataTable.Title>Order ID</DataTable.Title>
                     <DataTable.Title>Namn</DataTable.Title>
-                    <DataTable.Title>Totalt pris</DataTable.Title>
-                    <DataTable.Title>Skapad</DataTable.Title>
                     <DataTable.Title>Deadline</DataTable.Title>
+                    <DataTable.Title numeric>ID</DataTable.Title>
+                    <DataTable.Title numeric>Pris</DataTable.Title>
                 </DataTable.Header>
                 {listOfInvoices}
             </DataTable>
