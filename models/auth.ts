@@ -27,9 +27,14 @@ const auth = {
         });
         const result = await response.json();
 
-        await storage.storeToken(result.data.token);
+        if (typeof result.errors == 'undefined') {
+            await storage.storeToken(result.data.token);
+            return result.data.message;
+        } else {
+            return result.errors;
+        }
 
-        return result.data.message;
+        
     },
     register: async function register(email: string, password: string) {
         const data = {

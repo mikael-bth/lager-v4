@@ -14,7 +14,7 @@ export default function Home({navigation, setIsLoggedIn}) {
                     navigation.navigate('Lager');
                 }}
             >
-            <Text style={Forms.buttonText}>Ja</Text>
+            <Text style={Forms.buttonText}>Logga ut</Text>
         </Pressable>
         <Pressable
                 style={Forms.button}
@@ -22,7 +22,7 @@ export default function Home({navigation, setIsLoggedIn}) {
                     navigation.navigate('Lager');
                 }}
             >
-            <Text style={Forms.buttonText}>Nej</Text>
+            <Text style={Forms.buttonText}>Nej, logga inte ut</Text>
         </Pressable>
     </View>
   );

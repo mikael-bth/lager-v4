@@ -21,6 +21,7 @@ export default function Login({navigation}) {
             submit={doRegister}
             title="Registrera"
             navigation={navigation}
+            failed={false}
         />
     );
 };
