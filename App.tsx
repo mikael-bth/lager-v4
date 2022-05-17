@@ -26,6 +26,7 @@ const routeIcons = {
 
 export default function App() {
   const [products, setProducts] = useState([]);
+  const [allOrders, setAllOrders] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
   
   useEffect(async () => {
@@ -48,13 +49,15 @@ export default function App() {
             {() => <Home products={products} setProducts={setProducts} />}
           </Tab.Screen>
           <Tab.Screen name="Plock">
-            {() => <Pick setProducts={setProducts} />}
+            {() => <Pick setProducts={setProducts} allOrders={allOrders} setAllOrders={setAllOrders}/>}
           </Tab.Screen>
           <Tab.Screen name="Beställ">
             {() => <Deliveries setProducts={setProducts} />}
           </Tab.Screen>
           {isLoggedIn ?
-            <Tab.Screen name="Faktura" component={Invoices} /> :
+            <Tab.Screen name="Faktura">
+              {() => <Invoices setAllOrders={setAllOrders} />}
+            </Tab.Screen> :
             <Tab.Screen name="Logga in">
               {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
             </Tab.Screen>

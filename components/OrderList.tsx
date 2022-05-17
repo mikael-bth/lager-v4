@@ -3,9 +3,8 @@ import { View, Text, Pressable } from "react-native";
 import orderModel from "./../models/orders";
 import { Orders } from './../styles';
 
-export default function OrderList({ route, navigation }) {
+export default function OrderList({ route, navigation, allOrders, setAllOrders }) {
     let { reload } = route.params || false;
-    const [allOrders, setAllOrders] = useState([]);
 
     if (reload) {
         reloadOrders();

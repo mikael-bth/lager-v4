@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import orderModel from "./../models/orders";
 import { Orders, Deliveries } from './../styles';
 
-export default function OrderList({ route, navigation }) {
+export default function ShipList({ route, navigation }) {
     let { reload } = route.params || false;
     const [allOrders, setAllOrders] = useState([]);
 

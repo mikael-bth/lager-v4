@@ -12,7 +12,6 @@ function StockList({products, setProducts}) {
   async function reloadProducts() {
     const products = await productModel.getProducts();
     setProducts(products);
-    console.log("here");
   }
   
   const list = products.map((product, index) => {

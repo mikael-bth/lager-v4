@@ -9,7 +9,7 @@ import Order from '../interfaces/order';
 import Invoice from '../interfaces/invoice';
 import config from './../config/config.json';
 
-export default function InvoicesForm({ navigation }) {
+export default function InvoicesForm({ navigation, setAllOrders }) {
     const [invoice, setInvoice] = useState<Partial<Invoice>>({});
     const [currentOrder, setCurrentOrder] = useState<Partial<Order>>({});
 
@@ -33,7 +33,8 @@ export default function InvoicesForm({ navigation }) {
         };
     
         await orderModel.updateOrder(updatedOrder);
-    
+        const orders = await orderModel.getOrders();
+        setAllOrders(orders);
         navigation.navigate("Fakturor", { reload: true });
     }
 
