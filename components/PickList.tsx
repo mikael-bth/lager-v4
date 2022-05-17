@@ -1,22 +1,18 @@
-import { useState, useEffect } from 'react';
 import { View, Text, Pressable, Alert } from "react-native";
 import orderModel from "./../models/orders";
 import productModel from "./../models/products";
 import { Typography, Orders } from './../styles';
 
-export default function PickList({ route, navigation }) {
+export default function PickList({ route, navigation, setProducts }) {
     const { order } = route.params;
-    const [productsList, setProductsList] = useState([]);
     let pickable = true
     let notStockedList = [];
-
-    useEffect(async () => {
-        setProductsList(await productModel.getProducts());
-    }, []);
 
     async function pick() {
         if (pickable) {
             await orderModel.pickOrder(order);
+            const products = await productModel.getProducts();
+            setProducts(products);
             navigation.navigate("Orders", { reload: true });
         } else {
             console.log("unpickable")

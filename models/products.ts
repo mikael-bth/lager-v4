@@ -22,7 +22,7 @@ const products = {
             console.log(error);
         }
 
-    }
+    },
 };
 
 export default products;

@@ -1,7 +1,6 @@
 import config from "../config/config.json";
 import OrderItem from "../interfaces/order_item";
 import Order from "./../interfaces/order";
-import productModel from "./products";
 
 const orders = {
     getOrders: async function getOrders(): Promise<Order> {
@@ -18,8 +17,6 @@ const orders = {
                 stock: order_item.stock - order_item.amount,
                 api_key: config.api_key
             };
-
-            await productModel.updateProduct(updatedProduct);
         });
 
         const updatedOrder = {

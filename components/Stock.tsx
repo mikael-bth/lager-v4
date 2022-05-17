@@ -5,19 +5,14 @@ import productModel from "../models/products.ts";
 import { Typography } from './../styles';
 
 function StockList({products, setProducts}) {
-  const isFocused = useIsFocused();
-
-  if (isFocused) {
-    reloadProducts();
-  }
-
   useEffect(async () => {
-    reloadProducts();
+    await reloadProducts();
   }, []);
 
   async function reloadProducts() {
     const products = await productModel.getProducts();
     setProducts(products);
+    console.log("here");
   }
   
   const list = products.map((product, index) => {

@@ -9,7 +9,7 @@ import Delivery from '../interfaces/delivery';
 import Product from '../interfaces/product';
 import config from "../config/config.json";
 
-export default function DeliveryForm({ navigation }) {
+export default function DeliveryForm({ route, navigation, setProducts }) {
     const [delivery, setDelivery] = useState<Partial<Delivery>>({});
     const [currentProduct, setCurrentProduct] = useState<Partial<Product>>({});
 
@@ -27,6 +27,8 @@ export default function DeliveryForm({ navigation }) {
         };
     
         await productModel.updateProduct(updatedProduct);
+        const products = await productModel.getProducts();
+        setProducts(products);
     
         navigation.navigate("Inleveranser", { reload: true });
     }

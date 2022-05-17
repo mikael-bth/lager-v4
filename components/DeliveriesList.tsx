@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Button } from "react-native";
+import { View, ScrollView, Text, Pressable } from "react-native";
 import deliveryModel from "./../models/delivery";
-import { Base, Typography, Deliveries } from './../styles';
+import { Base, Typography, Deliveries, Forms } from './../styles';
 
 export default function DeliveriesList({ route, navigation }) {
     let { reload } = route.params || false;
@@ -37,14 +37,18 @@ export default function DeliveriesList({ route, navigation }) {
     }
 
     return (
-        <View style={[Base.base, {alignItems: "center"}]}>
-            {listOfDeliveries}
-            <Button
-                title="Skapa ny inleverans"
+        <ScrollView style={Base.base}>
+            <View style={{alignItems: "center"}}>
+                {listOfDeliveries}
+                <Pressable
+                style={Forms.button}
                 onPress={() => {
                     navigation.navigate('Ny inleverans');
                 }}
-            />
-        </View>
+                >
+                    <Text style={Forms.buttonText}>Skapa ny inleverans</Text>
+                </Pressable>
+            </View>
+        </ScrollView>
     );
 }
