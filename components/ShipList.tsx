@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
-import { View, Text } from "react-native";
+import { useEffect } from 'react';
+import { View, Text, Pressable } from "react-native";
 import orderModel from "./../models/orders";
-import { Orders, Deliveries } from './../styles';
+import { Orders } from './../styles';
 
-export default function ShipList({ route, navigation }) {
+export default function ShipList({ route, navigation, allOrders, setAllOrders }) {
     let { reload } = route.params || false;
-    const [allOrders, setAllOrders] = useState([]);
 
     if (reload) {
         reloadOrders();
@@ -22,15 +21,20 @@ export default function ShipList({ route, navigation }) {
     }, []);
 
     const listOfOrders = allOrders
-        .filter(order => order.status === "Skickad")
+        .filter(order => order.status === "Packad")
         .map((order, index) => {
             return (
-            <View key={index} style={Deliveries.delivery}>
-                <Text style={Deliveries.header}>Namn: {order.name}</Text>
-                <Text style={Deliveries.normal}>Adress: {order.adress}</Text>
-                <Text style={Deliveries.normal}>Stad-ZIP: {order.city}-{order.zip}</Text>
-                <Text style={Deliveries.normal}>Land: {order.country}</Text>
-            </View>
+            <Pressable
+                key={index}
+                style={Orders.order}
+                onPress={() => {
+                    navigation.navigate('Skica order', {
+                        order: order
+                    });
+                }}
+            >
+                <Text style={Orders.orderText}>{order.name}</Text>
+            </Pressable>
             );
         });
 

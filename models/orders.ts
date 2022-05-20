@@ -1,7 +1,7 @@
 import config from "../config/config.json";
 import OrderItem from "../interfaces/order_item";
 import Order from "./../interfaces/order";
-import productModel from "./products";
+import productModel from './products';
 
 const orders = {
     getOrders: async function getOrders(): Promise<Order> {

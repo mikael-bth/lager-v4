@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Pick from "./components/Pick";
 import Deliveries from "./components/Deliveries";
 import Invoices from "./components/Invoices";
+import Shipping from "./components/Shipping";
 import Auth from "./components/auth/Auth";
 import Logout from "./components/auth/Logout";
 import AuthModel from './models/auth';
@@ -19,6 +20,7 @@ const routeIcons = {
   "Lager": "home",
   "Plock": "list",
   "Beställ": "list-circle",
+  "Skicka": "airplane",
   "Logga in": "log-in",
   "Logga ut": "log-out",
   "Faktura": "stats-chart"
@@ -49,10 +51,13 @@ export default function App() {
             {() => <Home products={products} setProducts={setProducts} />}
           </Tab.Screen>
           <Tab.Screen name="Plock">
-            {() => <Pick setProducts={setProducts} allOrders={allOrders} setAllOrders={setAllOrders}/>}
+            {() => <Pick setProducts={setProducts} allOrders={allOrders} setAllOrders={setAllOrders} />}
           </Tab.Screen>
           <Tab.Screen name="Beställ">
             {() => <Deliveries setProducts={setProducts} />}
+          </Tab.Screen>
+          <Tab.Screen name="Skicka">
+            {() => <Shipping allOrders={allOrders} setAllOrders={setAllOrders} />}
           </Tab.Screen>
           {isLoggedIn ?
             <Tab.Screen name="Faktura">
