@@ -11,7 +11,7 @@ export default function Shipping(props) {
             <Stack.Screen name="Packade orders">
                 {(screenProps) => <ShipList {...screenProps} allOrders={props.allOrders} setAllOrders={props.setAllOrders} />}
             </Stack.Screen>
-            <Stack.Screen name="Skica order">
+            <Stack.Screen name="Skicka order">
                 {(screenProps) => <ShipOrder {...screenProps} />}
             </Stack.Screen>
         </Stack.Navigator>

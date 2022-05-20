@@ -28,7 +28,7 @@ export default function ShipList({ route, navigation, allOrders, setAllOrders })
                 key={index}
                 style={Orders.order}
                 onPress={() => {
-                    navigation.navigate('Skica order', {
+                    navigation.navigate('Skicka order', {
                         order: order
                     });
                 }}
