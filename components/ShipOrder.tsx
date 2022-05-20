@@ -1,11 +1,35 @@
+import { useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Base, Typography } from "./../styles";
-import { Marker } from "react-native-maps";
 
 import MapView from 'react-native-maps';
+import { Marker } from "react-native-maps";
+
+import getCoordinates from "./../models/nominatim";
+
 
 export default function ShipOrder({ route }) {
     const { order } = route.params;
+    const [marker, setMarker] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            const results = await getCoordinates(`${order.address}, ${order.city}`);
+
+            if (typeof results[0].lat == 'undefined') {
+                setMarker(<Marker
+                    coordinate={{ latitude: 56.17, longitude: 15.59 }}
+                    title="not valid address"
+                />);
+                
+            } else {
+                setMarker(<Marker
+                    coordinate={{ latitude: parseFloat(results[0].lat), longitude: parseFloat(results[0].lon) }}
+                    title={results[0].display_name}
+                />);
+            }
+        })();
+    }, []);
 
     return (
         <View style={Base.base}>
@@ -19,10 +43,7 @@ export default function ShipOrder({ route }) {
                     latitudeDelta: 0.1,
                     longitudeDelta: 0.1,
                 }}>
-                <Marker
-                    coordinate={{ latitude: 56.17, longitude: 15.59 }}
-                    title="Min första markör"
-                />
+                {marker}
             </MapView>
             </View>
         </View>
