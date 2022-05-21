@@ -71,6 +71,15 @@ export default function ShipOrder({ route, navigation }) {
         navigation.navigate("Packade orders", { reload: true });
     }
 
+    const orderItemsList = order.order_items.map((item, index) => {
+        return <Text
+                key={index}
+                style={{ ...Typography.normal }}
+                >
+                    {item.article_number} | {item.name} - {item.amount}
+            </Text>;
+    });
+
     return (
         <ScrollView style={Base.base}>
             <Text style={Typography.header2}>{order.name}</Text>
@@ -78,6 +87,8 @@ export default function ShipOrder({ route, navigation }) {
             <Text style={Typography.normal}>Address: {order.address}</Text>
             <Text style={Typography.normal}>Stad-ZIP: {order.city} - {order.zip}</Text>
             <Text style={Typography.normal}>Land: {order.country}</Text>
+            <Text style={Typography.header3}>Produkter</Text>
+            {orderItemsList}
             <Text style={Typography.header3}>Karta</Text>
             <View style={styles.container}>
             <MapView
