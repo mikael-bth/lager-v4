@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Text, View, ScrollView, StyleSheet, Pressable } from "react-native";
 import { Base, Typography, Forms } from "./../styles";
 import orderModel from "./../models/orders";
 import config from "./../config/config.json";
@@ -72,9 +72,13 @@ export default function ShipOrder({ route, navigation }) {
     }
 
     return (
-        <View style={Base.base}>
-            <Text style={Typography.header2}>{order.id} | {order.name}</Text>
-            <Text style={Typography.header3}>Platsinformation</Text>
+        <ScrollView style={Base.base}>
+            <Text style={Typography.header2}>{order.name}</Text>
+            <Text style={Typography.normal}>ID: {order.id}</Text>
+            <Text style={Typography.normal}>Address: {order.address}</Text>
+            <Text style={Typography.normal}>Stad-ZIP: {order.city} - {order.zip}</Text>
+            <Text style={Typography.normal}>Land: {order.country}</Text>
+            <Text style={Typography.header3}>Karta</Text>
             <View style={styles.container}>
             <MapView
                 style={styles.map}
@@ -101,7 +105,7 @@ export default function ShipOrder({ route, navigation }) {
             >
                 <Text style={Forms.buttonText}>Skicka order</Text>
             </Pressable>
-        </View>
+        </ScrollView>
     );
 };
 
@@ -110,6 +114,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-end",
         alignItems: "center",
+        height: 220
     },
     map: {
         ...StyleSheet.absoluteFillObject,
