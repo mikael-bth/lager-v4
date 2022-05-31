@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ScrollView, Text, TextInput, Button, Pressable, Platform, View } from "react-native";
 import { Base, Typography, Forms } from '../styles';
 import { Picker } from '@react-native-picker/picker';
+import { showMessage } from "react-native-flash-message";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import productModel from "../models/products";
 import deliveryModel from "../models/delivery";
@@ -18,19 +19,40 @@ export default function DeliveryForm({ route, navigation, setProducts }) {
             const defaultDate = new Date()
             delivery.delivery_date = defaultDate.toLocaleDateString('se-SV');
         }
-        await deliveryModel.addDelivery(delivery);
+
+        if (typeof delivery.comment == 'undefined') {
+            showMessage({
+                message: "Missing field",
+                description: "Delivery comment is missing",
+                type: "warning",
+            });
+        } else if (typeof delivery.amount == 'undefined') {
+            showMessage({
+                message: "Missing field",
+                description: "Delivery amount is missing",
+                type: "warning",
+            });
+        } else if (typeof delivery.product_id == 'undefined') {
+            showMessage({
+                message: "Missing field",
+                description: "Delivery product is missing",
+                type: "warning",
+            });
+        } else {
+            await deliveryModel.addDelivery(delivery);
     
-        const updatedProduct = {
-            ...currentProduct,
-            stock: (currentProduct.stock || 0) + (delivery.amount || 0),
-            api_key: config.api_key
-        };
-    
-        await productModel.updateProduct(updatedProduct);
-        const products = await productModel.getProducts();
-        setProducts(products);
-    
-        navigation.navigate("Inleveranser", { reload: true });
+            const updatedProduct = {
+                ...currentProduct,
+                stock: (currentProduct.stock || 0) + (delivery.amount || 0),
+                api_key: config.api_key
+            };
+        
+            await productModel.updateProduct(updatedProduct);
+            const products = await productModel.getProducts();
+            setProducts(products);
+        
+            navigation.navigate("Inleveranser", { reload: true });
+        }
     }
 
     return (

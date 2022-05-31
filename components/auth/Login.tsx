@@ -27,8 +27,8 @@ export default function Login({navigation, setIsLoggedIn}) {
             }   
         } else {
             showMessage({
-                message: "Saknas",
-                description: "E-post eller lösenord saknas",
+                message: "Missing fields",
+                description: "E-mail or password is missing",
                 type: "warning",
             });
         }
