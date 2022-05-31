@@ -1,7 +1,8 @@
-import { View, Text, Pressable, Alert } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import orderModel from "./../models/orders";
 import productModel from "./../models/products";
 import { Typography, Orders } from './../styles';
+import { showMessage } from "react-native-flash-message";
 
 export default function PickList({ route, navigation, setProducts }) {
     const { order } = route.params;
@@ -15,17 +16,11 @@ export default function PickList({ route, navigation, setProducts }) {
             setProducts(products);
             navigation.navigate("Orders", { reload: true });
         } else {
-            console.log("unpickable")
-            Alert.alert(
-                "ERROR",
-                `Not enough of ${notStockedList.join(", ")} in stock`,
-                [
-                    {
-                        text: "Close",
-                        style: "cancel"
-                    }
-                ]
-            );
+            showMessage({
+                message: "Insufficient stock",
+                description: `Not enough of ${notStockedList.join(", ")} in stock`,
+                type: "warning",
+            });
         }
     }
 

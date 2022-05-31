@@ -29,7 +29,7 @@ const auth = {
 
         if (typeof result.errors == 'undefined') {
             await storage.storeToken(result.data.token);
-            return result.data.message;
+            return result.data;
         } else {
             return result.errors;
         }
